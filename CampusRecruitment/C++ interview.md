@@ -165,7 +165,8 @@ public:
 静态编译，编译器在编译可执⾏⽂件时，把需要⽤到的对应动态链接库中的部分提取出来，连接到可执⾏⽂件中去，使可执⾏⽂件在运⾏时不需要依赖于动态链接库；
 动态编译，可执⾏⽂件需要附带⼀个动态链接库，在执⾏时，需要调⽤其对应动态链接库的命令。所以其优点⼀⽅⾯是缩⼩了执⾏⽂件本身的体积，另⼀⽅⾯是加快了编译速度，节省了系统资源。缺点是哪怕是很简单的程序，只 ⽤到了链接库的⼀两条命令，也需要附带⼀个相对庞⼤的链接库；⼆是如果其他计算机上没有安装对应的运⾏库， 则⽤动态编译的可执⾏⽂件就不能运⾏
 
-### 15. STL ⾥  [[resize和 reserve的区别]] 
+### 15. STL ⾥ resize 和 reserve 的区别
+[[the difference between resize and reserve]] 
 resize()：改变当前容器内含有元素的数量(size())，eg: vectorv; v.resize(len);v的size变为len,如果原来v的size⼩于 len，那么容器新增（len-size）个元素，元素的值为默认为0.当v.push_back(3);之后，则是3是放在了v的末尾，即 下标为len，此时容器是size为len+1； 
 reserve()：改变当前容器的最⼤容量（capacity）,它不会⽣成元素，只是确定这个容器允许放⼊多少对象，如果 reserve(len)的值⼤于当前的capacity()，那么会重新分配⼀块能存len个对象的空间，然后把之前v.size()个对象通 过 copy construtor 复制过来，销毁之前的内存
 ### 16. 重载和重写，重定义的区别
@@ -200,7 +201,7 @@ Line::~Line(void) {
 ```
 构造函数为什么⼀般不定义为虚函数：
 	虚函数机制依赖于虚函数表（vtable），而构造函数的作用正是创建对象和初始化虚函数表
-[[析构函数⼀般写成虚函数的原因]]
+	==析构函数⼀般写成虚函数的原因==：[[The reason destructors are generally written as virtual functions]]
 	防止内存泄漏
 ```C++
 #include <iostream>
@@ -212,7 +213,6 @@ public:
     virtual ~Base() {
         cout << "Base destructor" << endl;
     }
-    
     // ❌ 如果不是虚函数：
     // ~Base() {
     //     cout << "Base destructor" << endl;
@@ -228,7 +228,6 @@ public:
 
 int main() {
     Base* ptr = new Derived();
-    
     delete ptr;  // 如果析构函数是虚函数：
                  // 输出: Derived destructor → Base destructor
                  
@@ -239,9 +238,8 @@ int main() {
 ```
 
 
-### 18. [[C++ STL容器]]中迭代器的作⽤，有指针为何还要迭代器
+### 18. [[C++ STL]]容器中迭代器的作⽤，有指针为何还要迭代器
 
-### C++duo'xian'c
 
 # 三. 算法
 ### 排序
@@ -257,7 +255,7 @@ int main() {
 [翻转字符串里的单词](https://leetcode.cn/problems/reverse-words-in-a-string/description/)
 ==KMP==
 ## 5. 队列
-priority_queue用法（[[C++自定义比较规则]]）
+priority_queue用法（[[Custom Comparison Rules in C++]]）
 ```
 	class Cmp {
 	public:

@@ -57,5 +57,6 @@ Padding 的本质：​创建一个新的、更大的内存块，并将原始数
  - MLIR 的目标是 **可扩展**，任何框架或硬件都能定义自己的算子集。
 - 如果 MLIR 内部只固定一套 IR，那扩展性会差；通过 **Dialect 机制**，不同领域（算术、张量代数、控制流、硬件指令集）都能共存于 MLIR。
 - 不同 Dialect 可以在同一个 IR 中 **混合使用**，并且通过 **转换 Pass** 逐步“降级/优化”成底层 Dialect（比如 LLVM Dialect）
+- 常见的dialect：builtin、bufferization、tensor、linarg、llvm、gpu、vector、math dialect
 # 4.[Dataflow架构](https://mp.weixin.qq.com/s/q0Q15nbwbDU_8BGbH5l5LA)
 
