@@ -6,7 +6,7 @@ SIMD架构：full chip为单die，包含4个cluster/sic。每个cluster中包�
 ==4block * 6SIP * 2kernel_slot * 4subThread==
 ## 2.析构问题导致的内存泄漏
 (1) 当前方案的内存管理：如果数据非连续，需要CreateContiguousTensor，则把topsopTensorHandle_t保存。直到最后析构的时候调用topsopDestroyTensor(item, stream_)释放内存。
-(2) 近期优化代码，把op_cumprod变成static变量。导致它的生命周期持续到线程结束。带来收益：连续调用N次topsatenCumprod接口，只会被初始化一次，减少开销。
+(2) 近期优化代码，把op_cumprod变成static变量。导致它的生命周期持续到线程结束。带来收益：连续调用N次topsatenCumprod接口，==在host端只会被初始化一次==，减少开销。
 (3) 影响：连续调用多次非连续的topsatenCumprod，内存会一直增加，但是由于cumprod是static，要等到线程结束才会释放。调用topsStreamDestroy(stream)后，析构函数释放内存，但是析构函数需要stream。
 (4) 执行顺序：
 	(a) topsStreamCreate(&stream)
